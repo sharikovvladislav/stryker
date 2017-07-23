@@ -3,17 +3,22 @@ import * as _ from 'lodash';
 // Don't use JSON.parse, as it does not allow for regexes or functions, etc
 export const serialize: (obj: any) => string = require('serialize-javascript');
 
-export function freezeRecursively(target: { [customConfig: string]: any }) {
+export function freezeRecursively<T extends { [prop: string]: any }>(target: T): T {
   Object.freeze(target);
   Object.keys(target).forEach(key => {
     if (_.isObject(target[key])) {
       freezeRecursively(target[key]);
     }
   });
+  return target;
 }
 
 export function isPromise(input: any): input is Promise<any> {
   return input && typeof input['then'] === 'function';
+}
+
+export function filterEmpty<T>(input: (T | null | void)[]) {
+  return input.filter(item => item !== undefined && item !== null) as T[];
 }
 
 export function deserialize(serializedJavascript: String): any {

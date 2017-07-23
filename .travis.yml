@@ -1,12 +1,17 @@
 language: node_js
 node_js:
-  - "node"
-  - "7"
-  - "6"
-  - "4"
+- node
+- '7'
+- '6'
+- '4'
 install: npm install
-before_install: 
-  - if [[ `npm -v` = 2* ]]; then npm i -g npm@3; fi
+before_install:
+- if [[ `npm -v` = 2* ]]; then npm i -g npm@3; fi
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+after_success: ".travis/ci-release.jsh"
+env:
+  global:
+  - secure: R3rA+1p1z7HuPKakL932u5QVQbnGkdnan5//2eawsmo+q+dP0XSazCeE75IL+LDfCMNsdSkVbJQQHIzdR51KdTGet6pWCo9Dor72XZyNxPbevQlnYcDlQ9BHUKJDouX05Nd3BuDlEV5glrqfNTqZ+FqA54k2acEqu2zWSA205xBzL7uzQibJkarYmCGvxuKgY1qVDaZn/2G699n7NOazGZ35EJ+yrHfoqpW2X1VJ5usZa9UKc+3suI3nh5uuxOyznkv0iy6W7XKPXxUWQ7xGT/Va/qr8znCSuz0UzvnMMCbcZlwry2sIEFDGnuhsOzqT1JtAGg9o/IDW0hLUPEy12fMHitC9HGFKpjTSt6TZchbTaw9cYrjJf5iOdD13PmHFH+yBpdGA4gIwF/szc3WWA3ItHndNgPhfQ+qojZ3QE7WyeTC4Vthrs9aVvus00ouYdSZhbwCcA+TEQqoh+quXwB2xMoD1p7TizjNMY3C+lyUFk2jmrdClNgsC255MadWnqWodVpgvqtnR0ENaNBzV9bHZEE0NwH26/IqLJpKt/9LVZYyBdRp5tckxt87YD7NljPdtGLOQP4KyVKkPO0VCSqwH5Ox28MgTy4GWO2ArYsJBibdllucyWM2r4UwJV4AfcBfVXwzmOQLAogB5MZPnCe5C4w+Pg8KYXWAMpeQzS48=
+  - secure: QujMmA3hwYq+htb0v2cY9XHtqrze5QZlDG3ZHEfOorCAS+umO2mDfV5JckXElriCrQHnLwdwbAjhF5bYvJGOUv8834TmABDfvJAjJ6f7ygYiKTTkqbUGbKZCMOIl7U3wVDl5A9O8Ir+f/bjPrArPEGDYDdacvBCLuUqtDIqTgRcEmOGx0WK0bnJABgyy+7b0y9y5wV85ljyR/yn0rnQ53pN6dy/MdXkC2fLKx6k9d7j0UHokJ0ebEQjGtIJ8Ns43YvuLwsZq+kwgZoSE5iONB3tcUz5slavcjVu5eZfP6LRHB4dHS2WelQR32F5oYWlT/hmM81DWtDLfCACqkk028m2Bo2njlu5hzYuIzh4SgLKNtNPYQ4gZj6GVDPbQNsd69yhygBIb6tVGd0V0VYbRYhXoOe9Has2NdvG1xQogll1MZP9rTuBdr9F+u2E9kQLzKzI1UejUMCKkLk77XUp6ICDTZJ6vwj8NDa2RK+B68qY+WD1aerm3xVX+iZqPV9Ezbd2nFxwU2rBdqCE76wq2+/ynwLOBuAO/eSjZHSJ1y51rfYukzc747Dv/w7ppCMtHY/ztwrgUfxcsyekyO5gOUZb19sQ+bRn0i/wu53Q/MsfjGkUUfwjI/dwm003XLs0gdgdkHEhZVdsPJasFksYkCgrA7HU1cnCMYH8p6Apa3bI=

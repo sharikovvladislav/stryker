@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/stryker-mutator/stryker/compare/stryker-mocha-runner@0.4.3...stryker-mocha-runner@0.4.4) (2017-07-14)
+
+
+
+
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/stryker-mutator/stryker/compare/stryker-mocha-runner@0.4.2...stryker-mocha-runner@0.4.3) (2017-06-16)
+
+
+### Bug Fixes
+
+* **npmignore:** Align npm ignores (#321) ([db2a56e](https://github.com/stryker-mutator/stryker/commit/db2a56e))
+
+
+
+
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/stryker-mutator/stryker/compare/stryker-mocha-runner@0.4.0...stryker-mocha-runner@0.4.1) (2017-06-08)
+
+
+
+
 <a name="0.3.0"></a>
 # 0.3.0 (2017-04-21)
 
