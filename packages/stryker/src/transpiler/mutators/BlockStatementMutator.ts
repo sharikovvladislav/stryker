@@ -1,4 +1,4 @@
-import { Syntax } from 'esprima';
+import { types } from 'babel-core';
 import { Mutator, IdentifiedNode } from 'stryker-api/mutant';
 
 /**
@@ -6,12 +6,9 @@ import { Mutator, IdentifiedNode } from 'stryker-api/mutant';
  */
 export default class BlockStatementMutator implements Mutator {
   name = 'BlockStatement';
-  private type = Syntax.BlockStatement;
 
-  constructor() { }
-
-  applyMutations(node: IdentifiedNode, copy: <T>(obj: T, deep?: boolean) => T): void | IdentifiedNode {
-    if (node.type === this.type && node.body.length > 0) {
+  mutate(node: IdentifiedNode, copy: <T extends IdentifiedNode>(obj: T, deep?: boolean) => T): void | IdentifiedNode {
+    if (types.isBlockStatement(node) && node.body.length > 0) {
       let mutatedNode = copy(node);
       mutatedNode.body = [];
       return mutatedNode;

@@ -1,9 +1,8 @@
-'use strict';
-
-import MutatorOrchestrator from './MutatorOrchestrator';
+import * as fs from 'mz/fs';
+import JavaScriptTranspiler from './transpiler/JavaScriptTranspiler';
 import { Config, ConfigWriterFactory } from 'stryker-api/config';
 import { StrykerOptions, InputFile } from 'stryker-api/core';
-import { MutantResult } from 'stryker-api/report';
+import { MutantResult, SourceFile } from 'stryker-api/report';
 import { TestFramework } from 'stryker-api/test_framework';
 import SandboxCoordinator from './SandboxCoordinator';
 import ReporterOrchestrator from './ReporterOrchestrator';
@@ -70,7 +69,7 @@ export default class Stryker {
     this.timer.reset();
 
     let inputFiles = await new InputFileResolver(this.config.mutate, this.config.files).resolve();
-    let {runResult, sandboxCoordinator} = await this.initialTestRun(inputFiles);
+    let { runResult, sandboxCoordinator } = await this.initialTestRun(inputFiles);
     if (runResult && inputFiles && sandboxCoordinator) {
       let mutantResults = await this.generateAndRunMutations(inputFiles, runResult, sandboxCoordinator);
 
@@ -125,7 +124,8 @@ export default class Stryker {
   }
 
   private generateAndRunMutations(inputFiles: InputFile[], initialRunResult: RunResult, sandboxCoordinator: SandboxCoordinator): Promise<MutantResult[]> {
-    let mutants = this.generateMutants(inputFiles, initialRunResult);
+    let sourceFiles = this.readSourceFiles(inputFiles);
+    let mutants = this.generateMutants(sourceFiles, initialRunResult);
     if (mutants.length) {
       return sandboxCoordinator.runMutants(mutants);
     } else {
@@ -134,11 +134,30 @@ export default class Stryker {
     }
   }
 
-  private generateMutants(inputFiles: InputFile[], runResult: RunResult) {
-    let mutatorOrchestrator = new MutatorOrchestrator(this.reporter);
-    let mutants = mutatorOrchestrator.generateMutants(inputFiles
-      .filter(inputFile => inputFile.mutated)
-      .map(file => file.path));
+  private readSourceFiles(inputFiles: InputFile[]) {
+    let sourceFiles: SourceFile[] = [];
+
+    let filesToMutate = inputFiles.filter(i => i.mutated).map(i => i.path);
+    filesToMutate.forEach(path => {
+      let content = fs.readFileSync(path, 'utf8');
+      let sourceFile: SourceFile = { path, content };
+      freezeRecursively(sourceFile);
+      sourceFiles.push(sourceFile);
+      this.reporter.onSourceFileRead(sourceFile);
+    });
+
+    if (sourceFiles.length > 0) {
+      freezeRecursively(sourceFiles);
+      this.reporter.onAllSourceFilesRead(sourceFiles);
+    }
+
+    return sourceFiles
+  }
+
+  private generateMutants(sourceFiles: SourceFile[], runResult: RunResult) {
+    let transpiler = new JavaScriptTranspiler(sourceFiles);
+    transpiler.compile();
+    let mutants = transpiler.mutate();
     log.info(`${mutants.length} Mutant(s) generated`);
     let mutantRunResultMatcher = new MutantTestMatcher(mutants, runResult, this.coverageInstrumenter.retrieveStatementMapsPerFile(), this.config, this.reporter);
     mutantRunResultMatcher.matchWithMutants();

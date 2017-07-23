@@ -1,12 +1,11 @@
 {
   "private": true,
   "devDependencies": {
+    "@types/babel-core": "^6.7.14",
     "@types/chai-as-promised": "0.0.29",
     "@types/chalk": "^0.4.28",
     "@types/commander": "^2.9.0",
-    "@types/escodegen": "0.0.6",
     "@types/esprima": "^2.1.31",
-    "@types/estree": "0.0.32",
     "@types/glob": "^5.0.29",
     "@types/istanbul": "^0.4.29",
     "@types/karma": "^0.13.32",

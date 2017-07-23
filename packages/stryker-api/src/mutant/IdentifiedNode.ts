@@ -1,7 +1,7 @@
-import { Node } from 'estree';
+import { types } from 'babel-core';
 
 export interface Identified {
   nodeID: number;
 }
 
-export type IdentifiedNode = Node & Identified;
+export type IdentifiedNode = types.Node & Identified;

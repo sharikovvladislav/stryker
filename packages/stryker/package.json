@@ -51,11 +51,10 @@
     "stryker": "./bin/stryker"
   },
   "dependencies": {
+    "babel-core": "^6.25.0",
     "chalk": "^1.1.1",
     "commander": "^2.9.0",
     "es6-promise-pool": "^2.4.4",
-    "escodegen": "^1.8.0",
-    "esprima": "^2.7.0",
     "glob": "^7.0.3",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.4",

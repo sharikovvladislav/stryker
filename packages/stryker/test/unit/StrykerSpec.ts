@@ -10,7 +10,7 @@ import * as configReader from '../../src/ConfigReader';
 import * as testFrameworkOrchestrator from '../../src/TestFrameworkOrchestrator';
 import * as sandboxCoordinator from '../../src/SandboxCoordinator';
 import * as reporterOrchestrator from '../../src/ReporterOrchestrator';
-import * as mutatorOrchestrator from '../../src/MutatorOrchestrator';
+import * as JavaScriptTranspiler from '../../src/transpiler/JavaScriptTranspiler';
 import * as mutantRunResultMatcher from '../../src/MutantTestMatcher';
 import * as pluginLoader from '../../src/PluginLoader';
 import StrykerTempFolder from '../../src/utils/StrykerTempFolder';
@@ -54,7 +54,7 @@ describe('Stryker', function () {
     let reporterOrchestratorMock = {
       createBroadcastReporter: () => reporter
     };
-    let mutatorOrchestratorMock = {
+    let javaScriptTranspilerMock = {
       generateMutants: () => mutants
     };
     let mutantRunResultMatcherMock = {
@@ -67,7 +67,7 @@ describe('Stryker', function () {
     };
     sandbox.stub(testFrameworkOrchestrator, 'default').returns(testFrameworkOrchestratorStub);
     sandbox.stub(reporterOrchestrator, 'default').returns(reporterOrchestratorMock);
-    sandbox.stub(mutatorOrchestrator, 'default').returns(mutatorOrchestratorMock);
+    sandbox.stub(JavaScriptTranspiler, 'default').returns(javaScriptTranspilerMock);
     sandbox.stub(mutantRunResultMatcher, 'default').returns(mutantRunResultMatcherMock);
     sandbox.stub(configReader, 'default').returns(configReaderMock);
     sandbox.stub(pluginLoader, 'default').returns(pluginLoaderMock);

@@ -19,7 +19,7 @@ interface Mutator {
    * @param copy A function to create a copy of an object.
    * @returns An array of mutated Nodes.
    */
-  applyMutations(node: IdentifiedNode, copy: <T extends IdentifiedNode> (obj: T, deep?: boolean) => T): void | IdentifiedNode | IdentifiedNode[];
+  mutate(node: IdentifiedNode, copy: <T extends IdentifiedNode> (obj: T, deep?: boolean) => T): void | IdentifiedNode | IdentifiedNode[];
 }
 
 export default Mutator;

@@ -1,12 +1,8 @@
-'use strict';
-
 import { expect } from 'chai';
 import Mutant from '../../src/Mutant';
 import { Location } from 'stryker-api/core';
-import * as parserUtils from '../../src/utils/parserUtils';
 import * as sinon from 'sinon';
 import StrykerTempFolder from '../../src/utils/StrykerTempFolder';
-import * as estree from 'estree';
 
 describe('Mutant', () => {
   let sut: Mutant;
@@ -16,8 +12,6 @@ describe('Mutant', () => {
   let mutatedLine: string;
   let mutatedCode: string;
   let lineNumber: number;
-  let ast: estree.Program;
-  let node: estree.Node;
   let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
@@ -33,8 +27,6 @@ describe('Mutant', () => {
     lineNumber = 2;
 
     filename = 'something.js';
-    ast = parserUtils.parse(mutatedCode);
-    node = <estree.Expression>(<estree.VariableDeclaration>ast.body[1]).declarations[0].init;
   });
 
   describe('with single line code', () => {
